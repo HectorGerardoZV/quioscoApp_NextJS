@@ -1,15 +1,15 @@
 import Layout from "../layout/Layout"
 import { formatearDinero } from "../helpers/helpers"
 import useQuiosco from "../hooks/useQuiosco"
-import { useEffect } from "react"
 
 const total = () => {
-    const { pedido, handleInputNombre, nombreCliente } = useQuiosco()
-    
+    const { pedido, handleInputNombre, nombreCliente, handelAgregarOrden, total } = useQuiosco()
+
 
     const agregarOrden = (e) => {
         e.preventDefault()
-        console.log("Agregado");
+        handelAgregarOrden()
+
     }
 
     const writeNombreCliente = (e) => {
@@ -37,7 +37,7 @@ const total = () => {
 
                 <div className="mt-10">
                     <p className="text-2xl">
-                        Total a pagar: <span className="font-bold">{`${formatearDinero(200)}`}</span>
+                        Total a pagar: <span className="font-bold">{`${formatearDinero(total)}`}</span>
                     </p>
                 </div>
 

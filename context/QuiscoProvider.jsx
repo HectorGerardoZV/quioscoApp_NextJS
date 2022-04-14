@@ -1,18 +1,19 @@
 import { useState, useEffect, createContext } from "react";
+import {useRouter} from "next/router"
 import { toast } from "react-toastify"
 import axios from "axios";
 const QuioscoContext = createContext();
 
 
 const QuioscoProvider = ({ children }) => {
+    const router = useRouter();
     const [categorias, setCategorias] = useState([])
     const [categoriaActual, setCategoriaActual] = useState({})
     const [producto, setProducto] = useState({})
     const [modal, setModal] = useState(false)
     const [pedido, setPedido] = useState([])
     const [nombreCliente, setNombrecliente] = useState("")
-    const [disponibleAgregar, setDisponible] = useState(false);
-
+    const [total, setTotal] = useState(0);
 
     const obtenerCategorias = async () => {
         try {
@@ -59,6 +60,31 @@ const QuioscoProvider = ({ children }) => {
         setNombrecliente(nombre)
     }
 
+    const handelAgregarOrden = async()=>{
+        try {
+            const {data} =await axios.post("/api/ordenes",
+            {pedido,nombre: nombreCliente,total,fecha:Date.now().toString()})
+            toast.success(data.msg, {
+                position: "top-right",
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                })
+
+            setCategoriaActual(categorias[0])
+            setPedido([])
+            setTotal(0)
+            setNombrecliente("")
+            setTimeout(() => {
+                router.push('/')
+            }, 3000);
+        } catch (error) {
+            
+        }
+    }
 
     useEffect(() => {
         obtenerCategorias();
@@ -67,6 +93,10 @@ const QuioscoProvider = ({ children }) => {
         setCategoriaActual(categorias[0])
     }, [categorias])
 
+    useEffect(()=>{
+        const newTotal = pedido.reduce((totalAux, producto)=>(producto.precio*producto.cantidad)+totalAux,0)
+        setTotal(newTotal)
+    },[pedido])
     return (
         <QuioscoContext.Provider
             value={{
@@ -76,13 +106,15 @@ const QuioscoProvider = ({ children }) => {
                 modal,
                 pedido,
                 nombreCliente,
+                total,
                 handleClickCategoria,
                 handleClickProducto,
                 handleChangeModal,
                 handleAgregarPedido,
                 handleEditarCantidad,
                 handleEliminarProducto,
-                handleInputNombre
+                handleInputNombre,
+                handelAgregarOrden
             }}
         >
             {children}
