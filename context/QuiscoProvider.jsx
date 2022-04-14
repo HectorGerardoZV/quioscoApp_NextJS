@@ -10,6 +10,8 @@ const QuioscoProvider = ({ children }) => {
     const [producto, setProducto] = useState({})
     const [modal, setModal] = useState(false)
     const [pedido, setPedido] = useState([])
+    const [nombreCliente, setNombrecliente] = useState("")
+    const [disponibleAgregar, setDisponible] = useState(false);
 
 
     const obtenerCategorias = async () => {
@@ -41,7 +43,6 @@ const QuioscoProvider = ({ children }) => {
         }
         setModal(false)
     }
-
     const handleEditarCantidad = (id) => {
         const producto = pedido.filter(productoItem => productoItem.id == id)[0];
         if (producto) {
@@ -54,6 +55,10 @@ const QuioscoProvider = ({ children }) => {
         const pedidoActualizado = pedido.filter(producto => producto.id !== id)
         setPedido(pedidoActualizado)
     }
+    const handleInputNombre = (nombre)=>{
+        setNombrecliente(nombre)
+    }
+
 
     useEffect(() => {
         obtenerCategorias();
@@ -70,12 +75,14 @@ const QuioscoProvider = ({ children }) => {
                 producto,
                 modal,
                 pedido,
+                nombreCliente,
                 handleClickCategoria,
                 handleClickProducto,
                 handleChangeModal,
                 handleAgregarPedido,
                 handleEditarCantidad,
-                handleEliminarProducto
+                handleEliminarProducto,
+                handleInputNombre
             }}
         >
             {children}
