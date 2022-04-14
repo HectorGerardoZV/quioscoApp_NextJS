@@ -1,11 +1,11 @@
 import Head from "next/head"
 import Sidebar from "../components/Sidebar"
-
+import { ToastContainer } from "react-toastify"
 import ModalProducto from "../components/ModalProducto";
 import Modal from "react-modal"
 import useQuiosco from "../hooks/useQuiosco";
 
-
+import "react-toastify/dist/ReactToastify.css"
 const customStyles = {
     content: {
         top: '50%',
@@ -48,10 +48,21 @@ const Layout = (props) => {
                         isOpen={modal}
                         style={customStyles}
                     >
-                        <ModalProducto/>
+                        <ModalProducto />
                     </Modal>
                 ) : null
             }
+            <ToastContainer
+                position="top-right"
+                autoClose={2000}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+            />
         </>
     )
 }
