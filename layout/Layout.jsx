@@ -17,7 +17,9 @@ const Layout = (props) => {
                 </aside>
 
                 <main className="md:w-8/12 xl:w-3/4 2xl:w-4/5 h-screen overflow-y-scroll">
-                    {children}
+                    <section className="p-10">
+                        {children}
+                    </section>
                 </main>
             </div>
         </>
