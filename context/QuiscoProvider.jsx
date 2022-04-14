@@ -24,15 +24,12 @@ const QuioscoProvider = ({ children }) => {
         const categoria = categorias.filter(categoriaAux => categoriaAux.id == id)[0];
         setCategoriaActual(categoria)
     }
-
     const handleClickProducto = (producto) => {
         setProducto(producto)
     }
-
     const handleChangeModal = () => {
         setModal(!modal)
     }
-
     const handleAgregarPedido = ({categoriaId, imagen,...producto})=>{
         if(pedido.some(productoPedido=>productoPedido.id===producto.id)){
             const pedidoActualizado = pedido.map(productoPedido=>productoPedido.id==producto.id?producto:productoPedido)
@@ -44,11 +41,10 @@ const QuioscoProvider = ({ children }) => {
         }
         setModal(false)
     }
-
+      
     useEffect(() => {
         obtenerCategorias();
     }, [])
-
     useEffect(() => {
         setCategoriaActual(categorias[0])
     }, [categorias])
@@ -64,7 +60,7 @@ const QuioscoProvider = ({ children }) => {
                 handleClickCategoria,
                 handleClickProducto,
                 handleChangeModal,
-                handleAgregarPedido
+                handleAgregarPedido,
             }}
         >
             {children}
