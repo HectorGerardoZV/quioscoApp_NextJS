@@ -8,7 +8,7 @@ const pasos = [
 ]
 const Pasos = () => {
     const router = useRouter();
-    const goTo = (url,paso) => {
+    const goTo = (url) => {
         router.push(url);
     }
 
@@ -33,7 +33,7 @@ const Pasos = () => {
                     pasos.map(paso => (
                         <button key={paso.paso}
                             className={"text-2xl font-bold"}
-                            onClick={() => goTo(paso.url, paso.paso)}
+                            onClick={() => goTo(paso.url)}
                         >
                             {paso.nombre}
                         </button>
